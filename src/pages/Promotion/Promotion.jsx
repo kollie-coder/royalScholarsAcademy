@@ -32,7 +32,7 @@ const Promotion = () => {
    
    <div>
    <Form.Select>
-        <option>Select Current Session</option>
+        <option disabled selected>Select Current Session</option> 
         <option>2018/2019</option>
         <option>2019/2020</option>
         <option>2020/2021</option>
@@ -42,7 +42,7 @@ const Promotion = () => {
       </Form.Select>
       <br />
       <Form.Select>
-        <option>Select Current Class</option>
+        <option disabled selected>Select Current Class</option>
         <option>Primary 1</option>
         <option>Primary 2</option>
         <option>Primary 3</option>
@@ -52,14 +52,14 @@ const Promotion = () => {
       </Form.Select>
       <br />
       <Form.Select>
-        <option>Select Student</option>
+        <option disabled selected>Select Student</option>
         <option>Ola</option>
         <option>Kola</option>
         <option>Ayo</option>
       </Form.Select>
       <br />
       <Form.Select>
-        <option>Select Class to be Promoted/Repeated</option>
+        <option disabled selected>Select Class to be Promoted/Repeated</option>
         <option>Primary 1</option>
         <option>Primary 2</option>
         <option>Primary 3</option>
