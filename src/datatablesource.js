@@ -1,0 +1,130 @@
+export const userColumns = [
+  { field: "id", headerName: "ID", width: 60 },
+  {
+    field: "regNum",
+    headerName: "Reg. No",
+    width: 130,
+    
+  },
+  {
+    field: "studentName",
+    headerName: "Student Name",
+    width: 290,
+  },
+
+  {
+    field: "age",
+    headerName: "Age",
+    width: 60,
+  },
+  {
+    field: "class",
+    headerName: "Current Class",
+    width: 200,
+  },
+  {
+    field: "gender",
+    headerName: "Gender",
+    width: 70,
+  },
+  {
+    field: "sessionEntry",
+    headerName: "Session Entry",
+    width: 130,
+  },
+ 
+];
+
+//temporary data
+export const userRows = [
+  {
+    id: 1,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 2,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 3,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 4,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 5,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 6,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 7,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 8,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 9,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+  {
+    id: 10,
+    regNum: "RSA2301",
+    studentName: "OWOLABI SAMUEL",
+    age: "4",
+    class: "PLAYGROUP",
+    gender: "M",
+    sessionEntry: "2022/2023",
+  },
+];

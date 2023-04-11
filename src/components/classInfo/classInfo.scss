@@ -1,0 +1,58 @@
+.box-mainprt{
+  margin-top: 22px;
+.box-prt { 
+ float: left;
+ padding: 0 8px;
+ width: 100%;
+ height: 600px;
+ box-sizing: border-box;
+ margin-left: 50px;
+ background-color: #E0FFFF;
+ 
+ .box-bodyPrt{ 
+
+   margin-top: 16px;
+   line-height: 18px;
+  
+   
+   .header-newPrt {
+       font-size: 18px;
+       font-weight: 600;
+      
+       }
+       .promotionTable{
+         border-top: 50px;
+
+         a:link {
+            text-decoration: none;
+            display: inline-block;
+       
+       }
+
+
+         a:visited { 
+           text-decoration: none; 
+           display: inline-block;
+       
+       }
+         
+         
+         a:hover { 
+           text-decoration: none;
+           display: inline-block;
+       
+       }
+         
+         
+         a:active { 
+           text-decoration: none;
+           display: inline-block;
+       }
+         
+       }
+  
+       
+
+     }  }
+
+   }

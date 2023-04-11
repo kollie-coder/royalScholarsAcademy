@@ -1,0 +1,119 @@
+.list {
+    display: flex;
+  .listContainer {
+    flex: 7;
+
+.new {
+    width: 100%;
+    
+  
+    .newContainer {
+   
+      .box-mainCl{
+           margin-top: 45px;
+        .box-cl { 
+          float: left;
+          padding: 0 8px;
+          width: 40%;
+          height: 490px;
+          box-sizing: border-box;
+          margin-left: 50px;
+          background-color: #E0FFFF;
+          
+          .box-bodyCl{ 
+        
+           margin-top: 10px;
+           
+          
+           
+            
+            .header-newCl {
+              font-size: 22px;
+              font-weight: 600;
+              
+              }
+            
+              .saveBtnCl1 {
+                border:  1px solid rgb(0, 136, 255);
+                
+                border-radius: 5px;
+                margin-top: 10px;
+                margin-left: 15px;
+                width: 55px;
+                padding: 2px;
+                cursor: pointer;
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+                }
+
+              }  }
+        
+        
+        .box-cl2 { 
+          float: left;
+          padding: 0 8px;
+          width: 45%;
+          height: 490px;
+          box-sizing: border-box;
+          margin-left: 20px;
+          background-color: #E0FFFF;
+  
+          .box-bodyCl2 {
+          margin-top: 16px;
+          line-height: 18px;
+            
+            .header-newCl {
+              font-size: 22px;
+              font-weight: 600;
+              }
+             .input-infoCl2{
+              margin-top: 15px;
+              margin-bottom: 8px;
+              margin-left: 10px;
+              font-size: 13px;
+              color: gray;
+             }
+             .input-instruct {
+                margin-top: 8px;
+                margin-left: 10px;
+                font-size: 13px;
+                color: gray;
+             }
+           
+             .saveBtnCl2{
+                border:  1px solid rgb(0, 136, 255);
+                padding: 8px;
+                border-radius: 5px;
+                margin-top: 15px;
+                margin-left: 15px;
+                width: 60px;
+                cursor: pointer;
+        
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+              
+              
+            }
+             
+        }
+        
+    }
+  }
+      
+     
+    }
+    }
+    .classInfoContainer{
+      margin-top: 20px;
+      margin-left: 10px;
+     max-width: 75rem;
+     }
+
+    }
+  }

@@ -1,0 +1,141 @@
+.list {
+    display: flex;
+  .listContainer {
+    flex: 6;
+
+.new {
+    width: 100%;
+    
+  
+    .newContainer {
+       
+        .instruction-div {
+            margin-top: 26px;
+            color: red;
+            margin-left: 100px;
+            font-size: 14px;
+        }
+     
+      .box-main{
+           margin-top: 22px;
+        .box-se { 
+          float: left;
+          padding: 0 8px;
+          width: 40%;
+          height: 220px;
+          box-sizing: border-box;
+          margin-left: 100px;
+          background-color: #E0FFFF;
+          
+          .box-body{ 
+        
+            margin-top: 16px;
+            line-height: 18px;
+           
+            
+            .header-new {
+                font-size: 22px;
+                font-weight: 600;
+                }
+               .input-info{
+                margin-top: 15px;
+                margin-bottom: 8px;
+                margin-left: 10px;
+                font-size: 13px;
+                color: gray;
+               }
+               .input-instruct {
+                  margin-top: 8px;
+                  margin-left: 10px;
+                  font-size: 13px;
+                  color: gray;
+               }
+               
+  
+              }
+              .saveBtn{
+                border:  1px solid rgb(0, 136, 255);
+                padding: 8px;
+                border-radius: 5px;
+                margin-top: 15px;
+                margin-left: 15px;
+                width: 60px;
+                cursor: pointer;
+        
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+              
+              
+            }
+
+              }  }
+        
+        
+        .box-se2 { 
+          float: left;
+          padding: 0 8px;
+          width: 40%;
+          height: 220px;
+          box-sizing: border-box;
+          margin-left: 20px;
+          background-color: #E0FFFF;
+  
+          .box-body2 {
+          margin-top: 16px;
+          line-height: 18px;
+            
+            .header-new {
+              font-size: 22px;
+              font-weight: 600;
+              }
+             .input-info{
+              margin-top: 15px;
+              margin-bottom: 8px;
+              margin-left: 10px;
+              font-size: 13px;
+              color: gray;
+             }
+             .input-instruct {
+                margin-top: 8px;
+                margin-left: 10px;
+                font-size: 13px;
+                color: gray;
+             }
+           
+             .saveBtn{
+                border:  1px solid rgb(0, 136, 255);
+                padding: 8px;
+                border-radius: 5px;
+                margin-top: 15px;
+                margin-left: 15px;
+                width: 60px;
+                cursor: pointer;
+        
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+              
+              
+            }
+             
+        }
+        
+    }
+  }
+      
+     
+    }
+    }
+    .classInfoContainer{
+      margin-top: 20px;
+      margin-left: 42px;
+     max-width: 75rem;
+     }
+
+    }
+  

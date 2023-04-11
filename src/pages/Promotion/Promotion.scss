@@ -1,0 +1,114 @@
+.list {
+    display: flex;
+    
+  .listContainer {
+    flex: 6;
+
+.new {
+    width: 100%;
+    
+  
+    .newContainer {
+       
+        
+      .box-main-Pr{
+           margin-top: 50px;
+        .box-pr { 
+          float: left;
+          padding: 0 8px;
+          width: 40%;
+          height: 450px;
+          box-sizing: border-box;
+          margin-left: 100px;
+          background-color: #E0FFFF;
+          
+          .box-body-pr{ 
+        
+            margin-top: 20px;
+            line-height: 18px;
+           
+            
+            .header-Pr {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 15px;
+                }
+               
+  
+              }
+              .promoteBtn{
+                border:  1px solid rgb(0, 136, 255);
+                padding: 4px;
+                border-radius: 5px;
+                margin-top: 25px;
+                margin-left: 15px;
+                width: 140px;
+                color: rgb(0, 128, 255);
+                cursor: pointer;
+        
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+              
+              
+            }
+
+               }
+        
+              
+     .box-pr2 { 
+          float: left;
+          padding: 0 8px;
+          width: 30%;
+          height: 450px;
+          box-sizing: border-box;
+          margin-left: 20px;
+          background-color: #E0FFFF;
+  
+          .box-body-pr2 {
+          margin-top: 16px;
+          line-height: 18px;
+            
+            .header-new {
+              font-size: 22px;
+              font-weight: 600;
+              }
+             .input-info{
+              margin-top: 15px;
+              margin-bottom: 8px;
+              margin-left: 10px;
+              font-size: 13px;
+              color: gray;
+             }
+             .promotion-guide {
+                margin-top: 8px;
+                font-size: 13px;
+                color: gray;
+
+                p strong {
+                    color: red;
+                }
+             }
+           
+           
+            
+             
+        }
+        
+    }
+}
+}
+  }
+      
+     
+    }
+    }
+    .classInfoContainer{
+      margin-top: 20px;
+      margin-left: 42px;
+     max-width: 75rem;
+     }
+
+    

@@ -1,0 +1,121 @@
+.list {
+    display: flex;
+    
+  .listContainer {
+    flex: 6;
+    margin-left: 160px;
+
+.new {
+    width: 100%;
+    
+    
+  
+    .newContainer {
+       
+        
+      .box-main-re{
+           margin-top: 50px;
+        .box-re { 
+          float: left;
+          padding: 0 8px;
+          width: 30%;
+          height: 500px;
+          box-sizing: border-box;
+          margin-left: 100px;
+          background-color: #E0FFFF;
+          
+          .box-body-re{ 
+        
+            margin-top: 20px;
+            line-height: 18px;
+           
+            
+            .header-re {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 15px;
+                }
+               
+  
+              }
+              .resultBtn{
+                border:  1px solid rgb(0, 136, 255);
+                padding: 4px;
+                border-radius: 5px;
+                margin-top: 25px;
+                margin-left: 15px;
+                width: 140px;
+                color: rgb(0, 128, 255);
+                cursor: pointer;
+        
+                &:hover  {
+                  opacity: 0.3;
+                  color: #fff;
+                  background-color: rgb(0, 64, 255);
+                }
+              
+              
+            }
+
+               }
+        
+              
+     .box-re2 { 
+          float: left;
+          padding: 0 8px;
+          width: 45%;
+          height: 500px;
+          box-sizing: border-box;
+          margin-left: 20px;
+          background-color: #E0FFFF;
+  
+          .box-body-re2 {
+          margin-top: 16px;
+          line-height: 18px;
+            
+            .header-re {
+              font-size: 18px;
+              font-weight: 600;
+              }
+             
+             .result-guide {
+                margin-top: 15px;
+                font-size: 13px;
+                color: red;
+
+                
+             }
+             .resultUpload {
+                box-sizing: border-box;
+                background-color: white;
+                height: 50px;
+                margin-bottom: 20px;
+                ::-webkit-file-upload-button {
+                    background: #fff;
+                    color: black;
+                    border:  1px solid hwb(0 87% 9%);
+                    padding: 1em;
+                    cursor: pointer;
+                    margin-right: 12px;
+                  }
+
+             }
+           
+           
+            
+             
+        }
+        
+    }
+}
+}
+  }
+      
+     
+    }
+    }
+    .classInfoContainer{
+      margin-top: 20px;
+      margin-left: 42px;
+     max-width: 75rem;
+     }
