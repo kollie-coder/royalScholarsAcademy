@@ -7,6 +7,8 @@ import Result from "./pages/Results/Results";
 import Session from "./pages/Session/Session";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single"
+import StudentDashboardd from "./studentPage/pages/studentDashboard/StudentDashboardd";
+import StudentTestimonials from "./studentPage/pages/studentTestimonial/StudentTestimonials";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -30,6 +32,9 @@ function App() {
               />
              <Route path="users" index element={<List />} />
              <Route path="/products" element={<Single />} />
+
+             <Route path="/studentDash" index element={<StudentDashboardd />} />
+             <Route path="/studentTestimony" element={<StudentTestimonials />} />
              
             
 

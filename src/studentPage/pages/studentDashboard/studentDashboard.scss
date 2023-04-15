@@ -1,0 +1,204 @@
+.studentDashboard {
+    display: flex;
+    margin-left: 160px;
+  
+    .studentDashboardContainer {
+      flex: 6;
+    
+      .widgets{
+        margin-left: 15px;
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+      }
+      .charts {
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+      }
+  
+      .charts {
+        padding: 5px 20px;
+      }
+  
+      .listContainer {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        padding: 20px;
+        margin: 20px;
+  
+        .listTitle {
+          font-weight: 500;
+          color: gray;
+          margin-bottom: 15px;
+        }
+      }
+      .dashInfoContainer {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        margin-left: 42px;
+       max-width: 75rem;
+       display: flex;
+         flex-direction: column;
+      }
+  
+      .box-mainDa{
+        margin-top: 45px;
+        
+     
+     
+     
+     .box-da1 { 
+       float: left;
+       padding: 0 8px;
+       width: auto;
+       height: 380px;
+       box-sizing: border-box;
+       margin-left: 90px;
+       background-color: #E0FFFF;
+  
+       .box-bodyDa1 {
+       margin-top: 16px;
+       line-height: 18px;
+  
+       .text {
+        font-size: 20px;
+        font-weight: 600;
+       }
+         
+       .react-calendar {
+        width: 500px;
+        max-width: 800px;
+        background-color: #E0FFFF;
+        color: #222;
+        border: none;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.125em;
+     
+  
+      }
+      
+      .react-calendar__navigation button {
+        color: #d4a713;
+        min-width: 44px;
+        background: none;
+        font-size: 16px;
+        margin-top: 8px;
+      }
+      
+      .react-calendar__navigation button:enabled:hover,
+      .react-calendar__navigation button:enabled:focus {
+        background-color: #f8f8fa;
+      }
+      .react-calendar__navigation button[disabled] {
+        background-color: #f0f0f0;
+      }
+      abbr[title] {
+        text-decoration: none;
+      }
+      
+      /* .react-calendar__month-view__days__day--weekend {
+        color: #d10000;
+       } */
+      
+      .react-calendar__tile:enabled:hover,
+      .react-calendar__tile:enabled:focus {
+        background: #f8f8fa;
+        color: #d4a713;
+        border-radius: 6px;
+      }
+      
+      .react-calendar__tile--now {
+        background: #d4a71333;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #d4a713;
+      }
+      
+      .react-calendar__tile--now:enabled:hover,
+      .react-calendar__tile--now:enabled:focus {
+        background: #d4a71333;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #d4a713;
+      }
+      
+      .react-calendar__tile--hasActive:enabled:hover,
+      .react-calendar__tile--hasActive:enabled:focus {
+        background: #f8f8fa;
+      }
+      
+      .react-calendar__tile--active {
+        background: #d4a713;
+        border-radius: 6px;
+        font-weight: bold;
+        color: white;
+      }
+      
+      .react-calendar__tile--active:enabled:hover,
+      .react-calendar__tile--active:enabled:focus {
+        background: #d4a713;
+        color: white;
+      }
+      
+      .react-calendar--selectRange .react-calendar__tile--hover {
+        background-color: #f8f8fa;
+      }
+      
+      .react-calendar__tile--range {
+        background: #f8f8fa;
+        color: #d4a713;
+        border-radius: 0;
+      }
+      
+      .react-calendar__tile--rangeStart {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        background: #d4a713;
+        color: white;
+      }
+      
+      .react-calendar__tile--rangeEnd {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background: #d4a713;
+        color: white;
+      } 
+        
+        
+         
+          }
+        }
+        .box-da2 { 
+          float: left;
+          padding: 0 8px;
+          width: auto;
+          height: 380px;
+          box-sizing: border-box;
+          margin-left: 80px;
+          background-color: #E0FFFF;
+         
+          .box-bodyDa2 {
+          margin-top: 16px;
+          line-height: 18px;
+            
+            
+           
+           
+            
+             }
+           
+          
+     }
+  
+     
+  
+      }
+     
+    }
+      
+    }

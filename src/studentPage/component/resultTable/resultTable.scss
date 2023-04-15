@@ -1,0 +1,45 @@
+.box-mainRt{
+    margin-top: 22px;
+  .box-rt { 
+   float: left;
+   padding: 0 8px;
+   width: 100%;
+   height: auto;
+   box-sizing: border-box;
+   margin-left: 50px;
+   background-color: #E0FFFF;
+   
+   .box-bodyRt{ 
+  
+     margin-top: 16px;
+     line-height: 18px;
+    
+     
+     .header-newRt {
+         font-size: 16px;
+         font-weight: 600;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         padding: 10px;
+        
+         p:nth-child(2) {
+            color: blue;
+         }
+        
+         }
+         .studentTable{
+           border-top: 50px;
+  
+           .btnSr{
+             color: blue;
+             border: none;
+           }
+           
+         }
+    
+         
+  
+       }  }
+  
+     }
