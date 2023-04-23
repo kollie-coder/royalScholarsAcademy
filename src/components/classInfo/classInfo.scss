@@ -1,26 +1,26 @@
-.box-mainprt{
+.box-mainCli{
   margin-top: 22px;
-.box-prt { 
+.box-cli { 
  float: left;
  padding: 0 8px;
  width: 100%;
- height: 600px;
+ height: auto;
  box-sizing: border-box;
  margin-left: 50px;
  background-color: #E0FFFF;
  
- .box-bodyPrt{ 
+ .box-bodyCli{ 
 
    margin-top: 16px;
    line-height: 18px;
   
    
-   .header-newPrt {
+   .header-newCli {
        font-size: 18px;
        font-weight: 600;
       
        }
-       .promotionTable{
+       .classTable{
          border-top: 50px;
 
          a:link {

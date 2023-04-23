@@ -94,7 +94,7 @@ const Promotion = () => {
  </div>
                
       </div>
-      <div className='classInfoContainer'>
+      <div className='promotionInfoContainer'>
      <Promotioninfo />
      </div>
     </div>

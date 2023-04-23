@@ -95,7 +95,7 @@ const Results = () => {
  </div>
                
       </div>
-      <div className='classInfoContainer'>
+      <div className='resultInfoContainer'>
        <Resultinfo />
     </div>
     </div>

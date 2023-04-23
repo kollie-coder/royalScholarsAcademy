@@ -56,7 +56,7 @@ const Session = () => {
       </div>
     </div>
 
-    <div className='classInfoContainer'>
+    <div className='sessionInfoContainer'>
      <Sessioninfo />
       
     </div>

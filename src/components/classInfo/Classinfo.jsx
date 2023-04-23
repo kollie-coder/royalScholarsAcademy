@@ -82,12 +82,12 @@ const columns = [
 const Classinfo = () => {
     
     return (
-      <div className="box-mainprt">
-    <div class="box-prt">
-<div className="box-bodyPrt">
-<p className='header-newPrt'>Class Information</p>
+      <div className="box-mainCli">
+    <div class="box-cli">
+<div className="box-bodyCli">
+<p className='header-newCli'>Class Information</p>
 
-  <div className="promotionTable">
+  <div className="classTable">
   
   <ToolkitProvider
   keyField="id"
