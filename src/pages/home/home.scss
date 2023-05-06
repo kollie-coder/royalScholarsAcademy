@@ -1,15 +1,25 @@
 .home {
   display: flex;
   margin-left: 160px;
+  
 
   .homeContainer {
     flex: 6;
+    height: auto;
   
     .widgets{
       margin-left: 15px;
       display: flex;
       padding: 20px;
       gap: 20px;
+
+      @media screen and (max-width: 980px) {
+        margin-left: 35px;
+        display: flex;
+        gap: 8px;
+        padding: 55px;
+      flex-direction: column;
+    }
     }
     .charts {
       display: flex;
@@ -40,12 +50,22 @@
      max-width: 75rem;
      display: flex;
        flex-direction: column;
+
+       @media screen and (max-width: 980px) {
+        margin-left: 0px;
+    }
+
     }
 
     .box-mainDa{
       margin-top: 45px;
       display: flex;
-  
+    
+      @media screen and (max-width: 980px) {
+        display: flex;
+      flex-direction: column;
+      margin-top: 90px;
+    }
       
    .box-da { 
      float: left;
@@ -56,6 +76,12 @@
      margin-left: 59px;
      background-color: #F3F6F9;
      
+     @media screen and (max-width: 980px) {
+        width: 100%;
+        margin-left: 40px;
+        margin-top: 35px;
+        height: 620px;
+    }
      .box-bodyDa{ 
      margin-top: 10px;
       
@@ -63,12 +89,16 @@
       width: 100% !important;
       margin: auto !important;
       margin-top: 3% !important;
+
+      
     }
     
     .carousel .slide {
       background: #E0FFFF !important;
       color: black;
       height: 100%;
+
+    
     }
     
     .carousel .slide img {
@@ -91,12 +121,20 @@
       padding-right: 5%;
       
       height: 220px;
+
+      @media screen and (max-width: 980px) {
+        height: 480px;
+    }
     }
     
     .carousel .control-dots {
       padding-left: 5px !important;
       outline: 0;
-      bottom: -1% !important;
+      bottom: -5% !important;
+
+      @media screen and (max-width: 980px) {
+        bottom: 10% !important;
+    }
     }
     
     .myCarousel h3 {
@@ -207,6 +245,13 @@
      margin-left: 80px;
      background-color: #F3F6F9;
 
+     @media screen and (max-width: 980px) {
+      width: 100%;
+      margin-top: 45px;
+      margin-left: 40px;
+      height: 620px;
+  }
+
      .box-bodyDa2 {
      margin-top: 16px;
      line-height: 18px;
@@ -217,7 +262,8 @@
      }
        
      .react-calendar {
-      width: 500px;
+      width: 100%;
+      height: 100%;
       max-width: 100%;
       background-color: #F3F6F9;
       color: #222;
@@ -225,6 +271,9 @@
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.125em;
    
+      @media screen and (max-width: 980px) {
+        line-height: 10.125em;
+    }
 
     }
     
@@ -331,15 +380,30 @@
         box-sizing: border-box;
         margin-left: 80px;
         background-color: #F3F6F9;
+
+        @media screen and (max-width: 980px) {
+          width: 100%;
+          margin-left: 40px;
+          margin-top: 45px;
+          height: 620px;
+      
+    }
        
         .box-bodyDa3 {
         margin-top: 16px;
         line-height: 18px;
           
-          
+   iframe{
+
+
+    @media screen and (max-width: 980px) {
+     height: 600px;
+     
+  }
+   }       
          
          
-          
+    
            }
          
         

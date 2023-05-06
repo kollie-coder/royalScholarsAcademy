@@ -1,17 +1,24 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { FaHome } from "react-icons/fa";
+import {SlLogout} from "react-icons/sl"
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import StoreIcon from "@mui/icons-material/Store";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Logo from "../../assets/logo.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
   return (
     <div className="sidebar">
       <div className="top">
@@ -77,10 +84,11 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <li>
-            <ExitToAppIcon className="icon" />
+          <li onClick={handleLogout}>
+            <SlLogout className="icon" />
             <span>Logout</span>
           </li>
+          
         </ul>
       </div>
       <div className="bottom">
@@ -92,7 +100,9 @@ const Sidebar = () => {
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
         ></div>
+        
       </div>
+     {/* <button className="logout-btn" onClick={handleLogout}>Logout</button>*/}
     </div>
   );
 };

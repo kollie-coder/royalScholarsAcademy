@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from "../../components/sidebar/Sidebar";
+import Sidebars from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Dashinfo from '../../components/dashInfo/Dashinfo';
 import "./home.scss";
@@ -8,15 +8,18 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
+import Test from '../../components/test/test';
 const Home = () => {
   const [date, setDate] = useState(new Date());
 
   return (
     <div className="home">
-      <Sidebar />
-      <div className="homeContainer">
+      
+      <Sidebars />
+       <div className="homeContainer">
         <Navbar />
-        <div className="widgets">
+
+       <div className="widgets">
         <Widget type="totalStudents" />
         <Widget type="uploadedResults" />
           <Widget type="currentSession" />
@@ -101,7 +104,7 @@ const Home = () => {
    <div class="box-da3">
    <div className="box-bodyDa3">
      
-   <div>
+   <div className='map-res'>
         <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63396.0772899765!2d3.4532773582031213!3d6.738737100000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bc3414bcab155%3A0xab6a2841981e4c66!2sRoyal%20Scholars%20Academy!5e0!3m2!1sen!2sus!4v1679920567216!5m2!1sen!2sus"
         width="100%"
@@ -119,10 +122,10 @@ const Home = () => {
    
 
    </div>
-         
+      
      
 
-      </div>
+      </div> 
     </div>
    
   );
