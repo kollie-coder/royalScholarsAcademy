@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import Table from 'react-bootstrap/Table';
+import { Button } from 'react-bootstrap';
 import "./sessionInfo.scss";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -8,64 +10,167 @@ import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolk
 import paginationFactory from 'react-bootstrap-table2-paginator';
 const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
-const products = [
-  { id: 1, SessionName: "2014/2015", Status:"Not Active"},
-  { id: 2, SessionName: "2015/2016", Status:"Not Active"},
-  { id: 3, SessionName: "2016/2017", Status:"Not Active"},
-  { id: 4, SessionName: "2017/2018", Status:"Not Active"},
-  { id: 5, SessionName: "2018/2019", Status:"Not Active"},
-  { id: 6, SessionName: "2019/2020", Status:"Not Active"},
-  { id: 7, SessionName: "2020/2021", Status:"Not Active"},
-  { id: 8, SessionName: "2021/2022", Status:"Not Active"},
-  { id: 9, SessionName: "2022/2023", Status:"Not Active"},
-  { id: 10, SessionName: "2023/2024", Status:"Not Active"},
-  { id: 11, SessionName: "2024/2025", Status:"Not Active"},
- 
-];
-const columns = [
-  {
-    dataField: "id",
-    text: "#",
-    headerStyle: (colum, colIndex) => {
-   return { width: "50px", textAlign: "center" };
-  }
-},
-
-  
-  {
-    dataField: "SessionName",
-    text: "Session Name",
-    sort: true
-  },
-  {
-    dataField: "Status",
-    text: "Status",
-    sort: true
-  },
-  
-  
-  {
-    dataField: "action",
-    text: "Action",
-    formatter: (cellContent, row) => {
-      return (
-        <>
-        <button
-        className="" style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}} >
-        Activate
-      </button>
-      </>
-      );
-    },
-  },
-  
-  
-  
-];
-
 
 
 const Sessioninfo = () => {
+  const [data, setData] = useState([]);
+  const [status, setStatus] = useState(false);
+  const [data1, setData1] = useState([]);
+  
+  
+  const table1Columns = [
+    {
+      dataField: "id",
+      text: "#",
+      headerStyle: (colum, colIndex) => {
+     return { width: "50px", textAlign: "center" };
+    }
+  },
+  
+    
+    {
+      dataField: "session_name",
+      text: "Session Name",
+      sort: true
+    },
+    {
+      dataField: "status",
+      text: "Status",
+      formatter: (cell, row) => {
+        return cell ? "Active" : "Not Active";
+      },
+    },
+    
+    
+    {
+      text: 'Action',
+      formatter: (cellContent, row) => (
+        <button onClick={() => handleButtonClick(row)} 
+        style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}}
+        >
+          {row.status ? "Deactivate" : "Activate"}
+        </button>
+      )
+    }
+    
+    
+    
+  ];
+
+
+
+  const table1Columns2 = [
+    {
+      dataField: "id",
+      text: "#",
+      headerStyle: (colum, colIndex) => {
+     return { width: "50px", textAlign: "center" };
+    }
+  },
+  
+    
+    {
+      dataField: "term_name",
+      text: "Term Name",
+      sort: true
+    },
+    {
+      dataField: "status",
+      text: "Status",
+      formatter: (cell, row) => {
+        return cell ? "Active" : "Not Active";
+      },
+    },
+    
+    
+    {
+      text: 'Action',
+      formatter: (cellContent, row) => (
+        <button onClick={() => handleButtonClick1(row)} 
+        style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}}
+        >
+          {row.status ? "Deactivate" : "Activate"}
+        </button>
+      )
+    }
+    
+    
+    
+  ];
+
+  
+
+useEffect(() => {
+  
+   axios.get("http://francisop.pythonanywhere.com/school/session/")
+   
+  .then(response => {
+    setData(response.data);
+     
+    console.log(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}, []);
+
+const handleButtonClick = (row) => {
+  const newStatus = !row.status;
+  fetch(`http://francisop.pythonanywhere.com/school/session/${row.id}/`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status: newStatus, session_name: row.session_name })
+  })
+  .then((response) => {
+    if (response.ok) {
+      setStatus(newStatus);
+    } else {
+      throw new Error("Network response was not ok.");
+    }
+  })
+  .catch((error) => {
+    console.error("There was an error updating the data:", error);
+    setStatus(row.status);
+  });
+};
+
+useEffect(() => {
+  axios.get('http://francisop.pythonanywhere.com/school/term/')
+    .then(response => {
+      setData1(response.data);
+      console.log(data1);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}, []);
+
+
+const handleButtonClick1 = (row) => {
+  const newStatus1 = !row.status;
+  fetch(`http://francisop.pythonanywhere.com/school/term/${row.id}/`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status: newStatus1, term_name: row.term_name })
+  })
+  .then((response) => {
+    if (response.ok) {
+      setStatus(newStatus1);
+    } else {
+      throw new Error("Network response was not ok.");
+    }
+      
+  })
+  .catch((error) => {
+    console.error("There was an error updating the data:", error);
+    setStatus(row.status);
+  });
+};
+
   return (
     <div className="new">
        
@@ -80,8 +185,8 @@ const Sessioninfo = () => {
       <div className="Table1">
       <ToolkitProvider
   keyField="id"
-  data={ products }
-  columns={ columns }
+  data={ data }
+  columns={ table1Columns }
 >
   {
     props => (
@@ -95,65 +200,9 @@ const Sessioninfo = () => {
     )
   }
 </ToolkitProvider>
-
-      {/*<Table striped>  
-  <thead>  
-    <tr>  
-      <th>#</th>  
-      <th>Session Name</th>  
-      <th>Status</th>  
-      <th>Action</th>  
-    </tr>  
-  </thead>  
-  <tbody>  
-    <tr>  
-      <td style={{color:"red"}}>1</td>  
-      <td style={{color:"red"}}>2014/2015</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-    <tr>  
-      <td style={{color:"red"}}>2</td>  
-      <td style={{color:"red"}}>2015/2016</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-    <tr>  
-      <td style={{color:"red"}}>3</td>  
-      <td style={{color:"red"}}>2016/2017</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Active</td>  
-    </tr>  
-    <tr>  
-      <td style={{color:"red"}}>4</td>  
-      <td style={{color:"red"}}>2017/2018</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-    <tr>  
-      <td style={{color:"red"}}>5</td>  
-      <td style={{color:"red"}}>2021/2022</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-    <tr>  
-      <td style={{color:"red"}}>6</td>  
-      <td style={{color:"red"}}>2022/2023</td>  
-      <td style={{color:"red"}}>Active</td>  
-      <td style={{color:"blue"}}>Deactivate</td>  
-    </tr> 
-    <tr>  
-      <td style={{color:"red"}}>7</td>  
-      <td style={{color:"red"}}>2023/2024</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-  </tbody>  
-</Table>  */}
   
       </div>
-   
-   
+
 </div>
 </div>
 
@@ -162,36 +211,23 @@ const Sessioninfo = () => {
    <div className="box-bodySe2">
    <p className='header-newSeIn'>Add Term</p>
    <div className="Table2">
-      <Table striped>  
-  <thead>  
-    <tr>  
-      <th>#</th>  
-      <th>Term Name</th>  
-      <th>Status</th>  
-      <th>Action</th>  
-    </tr>  
-  </thead>  
-  <tbody>  
-    <tr>  
-      <td style={{color:"red"}}>1</td>  
-      <td style={{color:"red"}}>First Term</td>  
-      <td style={{color:"red"}}>Not Active</td>  
-      <td style={{color:"blue"}}>Activate</td>  
-    </tr>  
-    <tr>  
-      <td>2</td>  
-      <td>Second Term</td>  
-      <td>Active</td>  
-      <td>Deactivate</td>  
-    </tr>  
-    <tr>  
-    <td>3</td>  
-      <td>Third Term</td>  
-      <td>Not Active</td>  
-      <td>Activate</td>  
-    </tr>  
-  </tbody>  
-</Table>  
+   <ToolkitProvider
+  keyField="id"
+  data={ data1 }
+  columns={ table1Columns2 }
+>
+  {
+    props => (
+      <div>
+        <BootstrapTable 
+        striped
+        hover
+        { ...props.baseProps } />
+      </div>
+    )
+  }
+</ToolkitProvider>
+  
   
       </div>
    </div>
