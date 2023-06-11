@@ -1,17 +1,111 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Results.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Form from 'react-bootstrap/Form';
+import axios from "axios";
 import Resultinfo from '../../components/resultInfo/Resultinfo';
-
+import { InputGroup, Button } from 'react-bootstrap';
 
 const Results = () => {
   const [selected, setSelected] = useState('');
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+  
+  const [selectedId, setSelectedId] = useState('');
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+  
+  const [isLoading, setIsLoading] = useState(false);
 
-  const selectionChangeHandler = (event) => {
-    setSelected(event.target.value);
+  const [selectedSession, setSelectedSession] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedTerm,  setSelectTerm] = useState('');
+  const [id, setId] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
+  const [filteredData, setFilteredData] = useState('');
+  const [originalData, setOriginalData] = useState([]);
+  const [selectedData, setSelectedData] = useState(null);
+
+
+  
+
+  useEffect(() => {
+    axios.get('http://francisop.pythonanywhere.com/school/session/')
+      .then(response => {
+        setData1(response.data);
+        console.log(data1);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://francisop.pythonanywhere.com/school/term/')
+      .then(response => {
+        setData2(response.data);
+        console.log(data2);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  
+
+
+
+  useEffect(() => {
+    fetchDropdownOptions();
+  }, []);
+
+  const fetchDropdownOptions = async () => {
+    try {
+      const response = await axios.get('http://francisop.pythonanywhere.com/school/class/');
+      setDropdownOptions(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+
+  const handleSelectChange = (e) => {
+    const value = e.target.value;
+    setSelectedId(value);
+  };
+
+  const fetchData = async () => {
+    if (!selectedId) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await axios.get(`https://francisop.pythonanywhere.com/school/filter/${selectedId}`);
+      setData3(response.data);
+      setSelectedData(response.data[1])
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+
+
+  function handleSessionSelect(event) {
+    setSelectedSession(event.target.value);
+  }
+
+   function handleTermSelect(event) {
+    setSelectTerm(event.target.value);
+  }
+
+  function handleClassSelect(event) {
+    setSelectedClass(event.target.value);
+  }
 
   return (
     <div className="list">
@@ -30,41 +124,67 @@ const Results = () => {
    
    <div>
     <Form>
-    <Form.Select>
-        <option disabled selected>Select Current Session</option>
-        <option>2018/2019</option>
-        <option>2019/2020</option>
-        <option>2020/2021</option>
-        <option>2021/2022</option>
-        <option>2022/2023</option>
-        <option>2023/2024</option>
-      </Form.Select>
-      <br />
-      <Form.Select>
-        <option disabled selected>Select Term</option>
-        <option>First Term</option>
-        <option>Second Term</option>
-        <option>Third Term</option>
-      </Form.Select>
-      <br />
-      
-      <Form.Select>
-        <option disabled selected>Select Current Class</option>
-        <option>Primary 1</option>
-        <option>Primary 2</option>
-        <option>Primary 3</option>
-        <option>Primary 4</option>
-        <option>Js1</option>
-        <option>Js2</option>
-      </Form.Select>
-      
+    <InputGroup className="mb-3">
+        <InputGroup.Text id="basic-addon1">Select Current Session</InputGroup.Text>
+
+      <Form.Select onChange={handleSessionSelect}>
+      <option>Select Current Session</option>
+      {data1.map((item, index) => (
+        <option key={index} value={item.id}>
+        {item.session_name}
+        </option>
+))}
+    </Form.Select>
      
+    </InputGroup>
+      
+      <br />
+      
+
+      <InputGroup className="mb-3">
+        <InputGroup.Text id="basic-addon1">Select Term</InputGroup.Text>
+
+      <Form.Select onChange={handleTermSelect}>
+      <option>Select Current Session</option>
+      {data2.map((item, index) => (
+        <option key={index} value={item.id}>
+        {item.term_name}
+        </option>
+))}
+    </Form.Select>
+     
+    </InputGroup>
+      <br />
+      
+      <InputGroup className="mb-3">
+        <InputGroup.Text id="basic-addon1">Select Current Class</InputGroup.Text>
+
+      <Form.Select value={selectedId} onChange={handleSelectChange} onClick={fetchData}>
+      <option>Select Current Session</option>
+      {dropdownOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+        
+
+    </Form.Select>
+     
+    </InputGroup>
+      
+      
    <br />
    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        
-        <Form.Control as="textarea" aria-label="With textarea" style={{height:"13rem"}}  placeholder="Remark" />
+   {true && (
+        <Form.Control as="textarea" aria-label="With textarea" style={{height:"13rem"}} value={data3.map((item) => item.username).toString().replace(',', '\n')} placeholder="Remark" />
+        )}
         </Form.Group>
+
+        
+        
     </Form>
+
+   
    
       </div>
    

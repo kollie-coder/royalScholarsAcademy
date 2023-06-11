@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./new.scss";
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
@@ -9,47 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { TextField } from '@mui/material';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
 
-const useStyles = makeStyles( theme => ({
-  container: {
-    width: "100%",
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    
-    
-  },
-  select: {
-    height: 60,
-    width: 405,
-    outline: 'none',
-    
-    cursor: 'pointer',
-    textAlign: 'left',
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    border: "none",
-    color: theme.palette.common.black,
-    backgroundColor: theme.palette.common.white,
-  },
-  selectdisabled: {
-    color: grey[500],
-  },
-  menuitem: {
-    direction: "rtl",
-  
-  },
-  menuitemhidden: {
-    display: "none"
-  },
-  textfield: {
-    width: 405,
-    outline: "none",
-  }
-})); 
+
 
 
 	
@@ -57,19 +21,93 @@ const useStyles = makeStyles( theme => ({
 
 const New = () => {
   const [selectedFile, setSelectedFile] = useState();
-	
-
-  
   const [errorMsg, setErrorMsg] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [selectedSession, setSelectedSession] = useState('');
+  const [surname, setSurname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [othername, setOtherName] = useState('');
+  const [gender, setGender] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  
+
+  
 
 
-	
-  const handleSubmission = () => {
-	};
-  const classes = useStyles();
-    const [value, setValue] = useState("none");
-    const [showPlaceholder, setShowPlaceholder] = useState(value === "none");
+  useEffect(() => {
+    axios.get('http://francisop.pythonanywhere.com/school/session/')
+      .then(response => {
+        setData1(response.data);
+        console.log(data1);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+   useEffect(() => {
+    axios.get('http://francisop.pythonanywhere.com/school/class/')
+      .then(response => {
+        setData2(response.data);
+        console.log(data2);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  function handleSessionSelect(event) {
+    setSelectedSession(event.target.value);
+  }
+
+   function handleGenderChange(event) {
+    setGender(event.target.value);
+  }
+
+  function handleClassSelect(event) {
+    setSelectedClass(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const url = 'http://francisop.pythonanywhere.com/register/';
+    
+    const data = {
+       session: Number(selectedSession),
+        last_name: surname,
+        first_name: firstName,
+        other_name: othername,
+        gender: gender,
+        school_class: Number(selectedClass),
+        role: "student",
+        id : Number(selectedClass, selectedSession)
+    };
+
+    fetch(url, {
+
+       method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+      'Content-Type': 'application/json',
+      }
+    })
+   
+      .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      window.location.reload();
+    })
+
+    
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+  
+  
+  
 
     const handleFileChange = (event) => {
       if(event.target.files.length > 0){
@@ -104,7 +142,7 @@ const New = () => {
       setErrorMsg("")
       setIsSuccess(true)
     };
- 
+  
   return (
     <div className="new">
      
@@ -115,19 +153,19 @@ const New = () => {
    <div className="box-body1">
        <p className='header-new1'>Add New Student</p>
         <>
-        <Form>
+        <form onSubmit={handleSubmit}>
+          <Form>
         <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">Select Session of Entry</InputGroup.Text>
-       
-        <Form.Control as="select" rows={3} >
-        <option disabled selected>Select Current Session</option>
-        <option>2018/2019</option>
-        <option>2019/2020</option>
-        <option>2020/2021</option>
-        <option>2021/2022</option>
-        <option>2022/2023</option>
-        <option>2023/2024</option>
-      </Form.Control>
+        <InputGroup.Text id="basic-addon1">Session of Entry</InputGroup.Text>
+
+      <Form.Select onChange={handleSessionSelect}>
+      <option>Select Current Session</option>
+      {data1.map((item, index) => (
+        <option key={index} value={item.id}>
+        {item.session_name}
+        </option>
+))}
+    </Form.Select>
      
       </InputGroup>
       <br/>
@@ -136,6 +174,8 @@ const New = () => {
         <Form.Control
           placeholder="Surname"
           aria-label="Surname"
+          value={surname}
+          onChange={e => setSurname(e.target.value)}
           aria-describedby="basic-addon1"
         />
       </InputGroup>
@@ -145,15 +185,19 @@ const New = () => {
         <Form.Control
           placeholder="First Name"
           aria-label="First Name"
+          value={firstName}
+          onChange={e => setFirstName(e.target.value)}
           aria-describedby="basic-addon1"
         />
       </InputGroup>
       <br />
       <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
+        <InputGroup.Text id="basic-addon1">Other Name</InputGroup.Text>
         <Form.Control
-          placeholder="Last Name"
-          aria-label="Last Name"
+          placeholder="Other Name"
+          aria-label="Other Name"
+          value={othername}
+          onChange={e => setOtherName(e.target.value)}
           aria-describedby="basic-addon1"
         />
       </InputGroup>
@@ -161,37 +205,38 @@ const New = () => {
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Gender</InputGroup.Text>
        
-        <Form.Control as="select" rows={3} >
-        <option disabled selected>select gender</option>
-        <option>Male</option>
-        <option>Female</option>
-       
-      </Form.Control>
+      <Form.Select value={gender} onChange={handleGenderChange}>
+      <option>select gender</option>
+      <option value="male">Male</option>
+        <option value="female" >Female</option>
+        
+
+    </Form.Select>
      
       </InputGroup>
       <br />
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Class Name</InputGroup.Text>
        
-        <Form.Control as="select" rows={3} >
-        <option disabled selected>select Class</option>
-        <option>Primary 1</option>
-        <option>Primary 2</option>
-        <option>Primary 3</option>
-        <option>Primary 4</option>
-        <option>Js1</option>
-        <option>Js2</option>
-      </Form.Control>
-     
+      <Form.Select onChange={handleClassSelect}>
+      <option>select Class</option>
+      {data2.map((item, index) => (
+        <option key={index} value={item.id}>
+        {item.name}
+        </option>
+))}
+    </Form.Select>
       </InputGroup>
+     
      
    
     </Form>
+    <button type="submit" id="submitBtn" className="submitBtn">Save</button>
+      
+  </form>
         
         </>
-       
-
-       <button type="submit" id="submitBtn" className="submitBtn">Save</button>
+            
 </div>
 </div>
 

@@ -1,96 +1,165 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios';
 import "./datatable.scss";
 import Table from 'react-bootstrap/Table';
 import "bootstrap/dist/css/bootstrap.css";
+import { useParams } from 'react-router-dom'
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+import { Button, Modal } from 'react-bootstrap';
 const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
-const products = [
-  { id: 1, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 2, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 3, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 4, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 5, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 6, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 7, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 8, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 9, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 10, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 11, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 12, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 13, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 14, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 15, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 16, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 17, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 18, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 19, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 20, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-  { id: 21, RegNo: "RSA2222", StudentName: "OWOLABI KOLAWOLE", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
-];
-const columns = [
-  {
-    dataField: "id",
-    text: "#",
-    headerStyle: (colum, colIndex) => {
-   return { width: "50px", textAlign: "center" };
-  }
-},
+
+const Datatable = () => {
+  const [data, setData] = useState([]);
+  const [mergedData, setMergedData] = useState([]);
+  
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const fetchData = async () => {
+    try {
+      
+      const response = await axios.get('https://francisop.pythonanywhere.com/students/', {
+        
+      headers: {
+          'Content-Type': 'application/json',
+         'Authorization': 'token cf82e7a265017ce02a2db671591be9c0e47dc253',
+        }    
+      });
+      
+      const data = response.data;
+
+      const merged = data.map((item) => {
+        const mergedName = `${item.last_name} ${item.first_name}`;
+
+        return {
+          ...item,
+          fullName: mergedName,
+        };
+      });
+      
+      setMergedData(merged);
+      console.log(data)
+     
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const handleDeleteClick = async (row) => {
+    try {
+    
+      // Make the delete request to the API with the authorization header
+      const response = await fetch(`https://francisop.pythonanywhere.com/students/${row.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'token cf82e7a265017ce02a2db671591be9c0e47dc253',
+        },
+      });
+  
+      if (response.ok) {
+        // If the delete request is successful, update the data state by removing the deleted row
+        setData((prevData) => prevData.filter((dataRow) => dataRow.id !== row.id));
+      } else {
+        console.error('Delete request failed with status:', response.status);
+      }
+      
+    } catch (error) {
+      console.error('Error deleting row:', error);
+    }
+
+  };
+
+
+
+  const handleViewClick = (row) => {
+    setSelectedRow(row);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRow(null);
+    setShowModal(false);
+  };
 
   
-  {
-    dataField: "RegNo",
-    text: "Reg. No",
-    sort: true
+
+  const products = [
+    { id: 1, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023", Action: "Edit" },
+   
+  ];
+  const columns = [
+    {
+      dataField: "id",
+      text: "#",
+      headerStyle: (colum, colIndex) => {
+     return { width: "50px", textAlign: "center" };
+    }
   },
-  {
-    dataField: "StudentName",
-    text: "Student Name",
-    sort: true
-  },
-  {
-    dataField: "CurrentClass",
-    text: "Current Class",
-    sort: true
-  },
-  {
-    dataField: "Gender",
-    text: "Gender",
-    sort: true
-  },
-  {
-    dataField: "SessionEntry",
-    text: "Session Entry",
-    sort: true,
+  
     
-  },
-  
-  {
-    dataField: "action",
-    text: "Action",
-    formatter: (cellContent, row) => {
-      return (
-        <>
-        <button style={{color:'blue', padding: '5px', marginRight:"5px", backgroundColor:"white", border:'none'}}>
-          View
-        </button>
-      
-        <button
-        className="" style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}} >
-        Delete
-      </button>
-      </>
-      );
+    {
+      dataField: "matric",
+      text: "Reg. No",
+      sort: true
     },
-  },
-  
-  
-  
-];
-const Datatable = () => {
+    {
+      dataField: "fullName",
+      text: "Student Name",
+      sort: true
+    },
+    {
+      dataField: "class_name",
+      text: "Current Class",
+      sort: true
+    },
+    {
+      dataField: "gender",
+      text: "Gender",
+      sort: true
+    },
+    {
+      dataField: "session_name",
+      text: "Session Entry",
+      sort: true,
+      
+    },
+    
+    {
+      dataField: "action",
+      text: "Action",
+      formatter: (cellContent, row) => {
+        return (
+          <>
+          <button style={{color:'blue', padding: '5px', marginRight:"5px", backgroundColor:"white", border:'none'}}
+           onClick={() => handleViewClick(row)}
+          >
+            View
+          </button>
+        
+          <button
+          className="" style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}}
+          onClick={() => handleDeleteClick(row)}
+          >
+          Delete
+        </button>
+        </>
+        );
+      },
+    },
+    
+    
+    
+  ];
   
       
   return (
@@ -103,8 +172,10 @@ const Datatable = () => {
   
   <ToolkitProvider
   keyField="id"
-  data={ products }
+  data={ mergedData }
   columns={ columns }
+  cellEdit={cellEditFactory({ mode: 'click', blurToSave: true })}
+  noDataIndication="No data available"
   search
   exportCSV
 >
@@ -129,6 +200,41 @@ const Datatable = () => {
   }
 </ToolkitProvider>
 
+
+{selectedRow && (
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Student Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <strong>Registration Number: </strong>
+              {selectedRow.matric}
+            </div>
+            <div>
+              <strong>Full Name: </strong>
+              {selectedRow.fullName}
+            </div>
+            <div>
+              <strong>Gender: </strong>
+              {selectedRow.gender}
+            </div>
+            <div>
+              <strong>Session Entry: </strong>
+              {selectedRow.session_name}
+            </div>
+            <div>
+              <strong>Current Class: </strong>
+              {selectedRow.class_name}
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
   </div>
 
 

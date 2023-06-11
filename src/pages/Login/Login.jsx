@@ -28,24 +28,30 @@ const Login = () => {
     });
 
     const data = await response.json();
+
     if (response.ok) {
       const token = data.token;
       const role = data.role;
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
       window.alert('Login successful!');
+      console.log(token);
       if (role === 'admin') {
         navigate('/dashboard');
       } else {
-        navigate('/');
+        navigate('/studentDash');
       }
+      console.log(response);
     } else {
       setError(data.message);
     }
+
   } catch (error) {
     setError('An error occurred. Please try again later.');
   }
   }
+
+ 
   
   return (
     <div class="login-page">

@@ -33,7 +33,7 @@ function App() {
             <Route element={<Session />} path="/session"/>
             <Route element={<List />} path="/users"/> 
             <Route element={<StudentDashboardd />} path="/studentDash"/>
-            <Route element={<StudentDashboardd />} path="/studentTestimony"/>
+            <Route element={<StudentTestimonials />} path="/studentTestimony"/>
             </Route>
             
             <Route index element={<Login />} path="/login"  />

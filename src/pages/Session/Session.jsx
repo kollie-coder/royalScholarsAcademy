@@ -30,6 +30,7 @@ const Session = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        window.location.reload();
       })
       .catch((err) => {
 
@@ -59,6 +60,7 @@ const Session = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        window.location.reload();
       })
       .catch((err) => {
 

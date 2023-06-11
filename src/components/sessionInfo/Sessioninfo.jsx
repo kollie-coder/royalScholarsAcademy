@@ -13,7 +13,9 @@ const { SearchBar } = Search;
 
 
 const Sessioninfo = () => {
-  const [data, setData] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [tableData1, setTableData1] = useState([]);
+  //const [data, setData] = useState([]);
   const [status, setStatus] = useState(false);
   const [data1, setData1] = useState([]);
   
@@ -98,9 +100,21 @@ const Sessioninfo = () => {
     
   ];
 
-  
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://francisop.pythonanywhere.com/school/session/");
+      const data = response.data;
+      setTableData(data);
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-useEffect(() => {
+{/*useEffect(() => {
   
    axios.get("http://francisop.pythonanywhere.com/school/session/")
    
@@ -113,10 +127,12 @@ useEffect(() => {
     console.error(error);
   });
 }, []);
+*/}
 
-const handleButtonClick = (row) => {
+
+const handleButtonClick = async (row) => {
   const newStatus = !row.status;
-  fetch(`http://francisop.pythonanywhere.com/school/session/${row.id}/`, {
+ await fetch(`http://francisop.pythonanywhere.com/school/session/${row.id}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -129,14 +145,32 @@ const handleButtonClick = (row) => {
     } else {
       throw new Error("Network response was not ok.");
     }
+    window.location.reload();
   })
+  
   .catch((error) => {
     console.error("There was an error updating the data:", error);
     setStatus(row.status);
   });
+  await fetchData();
+  
 };
 
 useEffect(() => {
+  fetchData1();
+}, []);
+const fetchData1 = async () => {
+  try {
+    const response = await axios.get("http://francisop.pythonanywhere.com/school/term/");
+    const data = response.data;
+    setTableData1(data);
+    
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+{/*useEffect(() => {
   axios.get('http://francisop.pythonanywhere.com/school/term/')
     .then(response => {
       setData1(response.data);
@@ -146,11 +180,11 @@ useEffect(() => {
       console.log(error);
     });
 }, []);
+*/}
 
-
-const handleButtonClick1 = (row) => {
+const handleButtonClick1 = async (row) => {
   const newStatus1 = !row.status;
-  fetch(`http://francisop.pythonanywhere.com/school/term/${row.id}/`, {
+  await fetch(`http://francisop.pythonanywhere.com/school/term/${row.id}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -163,12 +197,14 @@ const handleButtonClick1 = (row) => {
     } else {
       throw new Error("Network response was not ok.");
     }
-      
+    window.location.reload();
   })
+  
   .catch((error) => {
     console.error("There was an error updating the data:", error);
     setStatus(row.status);
   });
+  await fetchData1();
 };
 
   return (
@@ -185,7 +221,7 @@ const handleButtonClick1 = (row) => {
       <div className="Table1">
       <ToolkitProvider
   keyField="id"
-  data={ data }
+  data={ tableData }
   columns={ table1Columns }
 >
   {
@@ -213,7 +249,7 @@ const handleButtonClick1 = (row) => {
    <div className="Table2">
    <ToolkitProvider
   keyField="id"
-  data={ data1 }
+  data={ tableData1 }
   columns={ table1Columns2 }
 >
   {
