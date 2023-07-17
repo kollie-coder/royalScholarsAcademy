@@ -6,7 +6,7 @@
    width: 100%;
    height: auto;
    box-sizing: border-box;
-   margin-left: 50px;
+   margin-left: 5px;
    background-color: #F3F6F9;
    
    .box-bodyRe{ 
@@ -22,6 +22,14 @@
          }
          .resultTable{
            border-top: 50px;
+.table-container {
+  overflow-x: auto;
+}
+
+.table-responsive {
+  overflow: auto;
+  white-space: nowrap;
+}
   
            .btnSr{
              color: blue;

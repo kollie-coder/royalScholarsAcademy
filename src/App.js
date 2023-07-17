@@ -15,7 +15,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-
+import Resulttable from "./components/resultTableEx/Resulttable";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const isAuthenticated = !!localStorage.getItem('token');
@@ -30,6 +30,7 @@ function App() {
             <Route element={<Promotion /> } path="/promotion" />
             <Route element={<Classes />} path="/classes" />
             <Route element={<Result />} path="/result" />
+            <Route element={<Resulttable />} path="/results/:id" />
             <Route element={<Session />} path="/session"/>
             <Route element={<List />} path="/users"/> 
             <Route element={<StudentDashboardd />} path="/studentDash"/>

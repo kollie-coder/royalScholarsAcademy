@@ -31,7 +31,7 @@ const Datatable = () => {
         
       headers: {
           'Content-Type': 'application/json',
-         'Authorization': 'token cf82e7a265017ce02a2db671591be9c0e47dc253',
+         'Authorization': 'token b43c081a15c73d61d7d272f411fb469c5a6bb378',
         }    
       });
       
@@ -62,7 +62,7 @@ const Datatable = () => {
       const response = await fetch(`https://francisop.pythonanywhere.com/students/${row.id}`, {
         method: 'DELETE',
         headers: {
-          Authorization: 'token cf82e7a265017ce02a2db671591be9c0e47dc253',
+          Authorization: 'token b43c081a15c73d61d7d272f411fb469c5a6bb378',
         },
       });
   

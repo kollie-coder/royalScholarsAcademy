@@ -4,6 +4,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
+import JSZip from 'jszip';
 import Resultinfo from '../../components/resultInfo/Resultinfo';
 import { InputGroup, Button } from 'react-bootstrap';
 
@@ -22,10 +23,9 @@ const Results = () => {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedTerm,  setSelectTerm] = useState('');
   const [id, setId] = useState('');
-  const [selectedValue, setSelectedValue] = useState('');
-  const [filteredData, setFilteredData] = useState('');
-  const [originalData, setOriginalData] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
+
+  const [files, setFiles] = useState([]);
 
 
   
@@ -72,6 +72,8 @@ const Results = () => {
   const handleSelectChange = (e) => {
     const value = e.target.value;
     setSelectedId(value);
+    setSelectedClass(e.target.value);
+    
   };
 
   const fetchData = async () => {
@@ -92,6 +94,63 @@ const Results = () => {
     }
   };
 
+  function sendData(event) {
+    event.preventDefault();
+    const url = 'http://francisop.pythonanywhere.com/school/result/';
+    const formData = new FormData();
+    formData.append('term', selectedTerm);
+    formData.append('session', selectedSession);
+    formData.append('school_class', selectedClass);
+  
+    // Read files and create a Promise for each file
+    const filePromises = Array.from(files).map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target.result);
+        reader.readAsArrayBuffer(file);
+      });
+    });
+  
+    // Wait for all file reading promises to resolve
+    Promise.all(filePromises)
+      .then((fileContents) => {
+        const zip = new JSZip();
+        const zipFolder = zip.folder('pdfs'); // Create a folder inside the ZIP file
+  
+        // Add each file to the ZIP folder
+        files.forEach((file, index) => {
+          const fileContent = fileContents[index];
+          zipFolder.file(file.name, fileContent);
+        });
+  
+        // Generate the ZIP file asynchronously
+        return zip.generateAsync({ type: 'blob' });
+      })
+      .then((zipFile) => {
+        formData.append('doc', zipFile, 'files.zip');
+  
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Success:', data);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error reading files:', error);
+      });
+  }
+
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+  };
 
 
 
@@ -103,9 +162,7 @@ const Results = () => {
     setSelectTerm(event.target.value);
   }
 
-  function handleClassSelect(event) {
-    setSelectedClass(event.target.value);
-  }
+  
 
   return (
     <div className="list">
@@ -116,14 +173,16 @@ const Results = () => {
        
       <div className="newContainer">
        
-       
+      <form onSubmit={sendData}>
         <div className="box-main-re">
         <div class="box-re">
    <div className="box-body-re">
    <h1 className='header-re'>Upload Class Result</h1>
+
    
    <div>
-    <Form>
+  
+
     <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Select Current Session</InputGroup.Text>
 
@@ -179,16 +238,11 @@ const Results = () => {
         <Form.Control as="textarea" aria-label="With textarea" style={{height:"13rem"}} value={data3.map((item) => item.username).toString().replace(',', '\n')} placeholder="Remark" />
         )}
         </Form.Group>
-
         
-        
-    </Form>
-
-   
-   
+  
       </div>
-   
- 
+      
+    
 </div>
 </div>
 
@@ -204,7 +258,7 @@ const Results = () => {
 
         <Form.Group controlId="formFileLg" className="mb-3">
         
-        <Form.Control type="file" multiple accept="application/pdf, application/vnd.ms-excel"  />
+        <Form.Control type="file" onChange={handleFileChange} multiple accept="application/pdf, application/vnd.ms-excel, application/zip"  />
       </Form.Group>
                 <div className="form-group">
                     <button className="btn btn-primary" type="submit">Upload Result</button>
@@ -212,6 +266,8 @@ const Results = () => {
 			</div>
    </div>
 </div>
+</form>
+
  </div>
                
       </div>
@@ -226,4 +282,6 @@ const Results = () => {
 }
 
 export default Results
+
+
 

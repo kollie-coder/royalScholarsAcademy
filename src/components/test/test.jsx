@@ -4,9 +4,79 @@ import axios   from 'axios';
 import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import { data } from 'jquery';
+
 const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
-const products = [
+
+
+const Test = () => {
+
+  const [term, setTerm] = useState('');
+  const [session, setSession] = useState('');
+  const [currentClass, setCurrentClass] = useState('');
+  const [files, setFiles] = useState([]);
+
+
+
+  function sendData(event) {
+    event.preventDefault();
+    const url = 'http://francisop.pythonanywhere.com/school/result/';
+  const formData = new FormData(); 
+  formData.append('term', term);
+  formData.append('session', session);
+  formData.append('school_class', currentClass);
+  formData.append('doc', files );
+
+
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+  };
+  
+return (
+<form onSubmit={sendData}>
+      <input type="text" value={term} onChange={(e) => setTerm(e.target.value)} placeholder="Term" />
+      <input type="text" value={session} onChange={(e) => setSession(e.target.value)} placeholder="Session" />
+      <input type="text" value={currentClass} onChange={(e) => setCurrentClass(e.target.value)} placeholder="Current Class" />
+      <input type="file" multiple onChange={handleFileChange} accept="application/pdf, application/vnd.ms-excel, application/zip" />
+
+      <button type="submit">Submit</button>
+    </form>
+
+
+
+
+
+
+
+)
+
+}
+
+
+
+
+
+
+export default Test
+
+
+{/*const products = [
   {
     id:"1",
     title:"3",
@@ -138,7 +208,6 @@ search
 </div>
 
 )
-}
+}*/}
 
 
-export default Test
