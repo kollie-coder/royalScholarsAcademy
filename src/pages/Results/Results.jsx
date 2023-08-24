@@ -104,29 +104,30 @@ const Results = () => {
     formData.append('session', selectedSession);
     formData.append('school_class', selectedClass);
   
-    docs.forEach((doc) => {
-      formData.append('doc', doc);
-    });
+    const successMessagesArray = [];
 
+    for (let i = 0; i < docs.length; i++) {
+      formData.append('doc', docs[i]);
 
     try {
       const response = await axios.post(url, formData);
 
       if (response.status === 200) {
-        const successMessage = `File ${successMessages.length + 1} successfully sent.`;
-        setSuccessMessages([...successMessages, successMessage]);
-      } else {
-        console.error('Error sending file:', response.statusText);
+        successMessagesArray.push(`File ${i + 1} sent successfully.`);
+        } else {
+          console.error(`Error sending file ${i + 1}:`, response.statusText);
+        }
+      } catch (error) {
+        console.error(`Error sending file ${i + 1}:`, error);
       }
-    } catch (error) {
-      console.error('Error sending files:', error);
     }
+
+    setSuccessMessages(successMessagesArray);
   };
 
   const handleDocChange = (e) => {
     setDocs([...docs, ...e.target.files]);
   };
-
 
 
   function handleSessionSelect(event) {
@@ -238,13 +239,16 @@ const Results = () => {
                 <div className="form-group">
                     <button className="btn btn-primary" type="submit">Upload Result</button>
                    </div>
-			</div>
-   </div>
-</div>
-</form>
-{successMessages.map((message, index) => (
+
+                   {successMessages.map((message, index) => (
         <p key={index}>{message}</p>
       ))}
+			</div>
+   </div>
+  
+</div>
+</form>
+
  </div>
                
       </div>
