@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./promotionInfo.scss"; 
@@ -7,89 +8,131 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+import { Button, Modal } from 'react-bootstrap';
 const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
-const products = [
+
+
+const Promotioninfo = () => {
+
+ const [data, setData] = useState([]);
+  const [mergedData, setMergedData] = useState([]);
+  
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const fetchData = async () => {
+    try {
+      
+      const response = await axios.get('https://francisop.pythonanywhere.com/students/', {
+        
+      headers: {
+          'Content-Type': 'application/json',
+         'Authorization': 'token b9e7fe8a82d7088303a465b07bab1ccfa9927846',
+        }    
+      });
+      
+      const data = response.data;
+
+      const merged = data.map((item) => {
+        const mergedName = `${item.last_name} ${item.first_name}`;
+
+        return {
+          ...item,
+          fullName: mergedName,
+        };
+      });
+      
+      setMergedData(merged);
+      console.log(data)
+     
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const handleViewClick = (row) => {
+    setSelectedRow(row);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRow(null);
+    setShowModal(false);
+  };
+
+
+  const products = [
   { id: 1, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
   { id: 2, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 3, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 4, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 5, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 6, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 7, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 8, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 9, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 10, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 11, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 12, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 13, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 14, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 15, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 16, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 17, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 18, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 19, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 20, RegNo: "RSA2301", StudentName: "OWOLABI SAMUEL", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
-  { id: 21, RegNo: "RSA2222", StudentName: "OWOLABI KOLAWOLE", CurrentClass: "PLAYGROUP", Gender: "M", SessionEntry: "2022/2023"},
+  
 ];
 const columns = [
-  {
-    dataField: "id",
-    text: "#",
-    headerStyle: (colum, colIndex) => {
-   return { width: "50px", textAlign: "center" };
-  }
-},
-
+    {
+      dataField: "id",
+      text: "#",
+      headerStyle: (colum, colIndex) => {
+     return { width: "50px", textAlign: "center" };
+    }
+  },
   
-  {
-    dataField: "RegNo",
-    text: "Reg. No",
-    sort: true
-  },
-  {
-    dataField: "StudentName",
-    text: "Student Name",
-    sort: true
-  },
-  {
-    dataField: "CurrentClass",
-    text: "Current Class",
-    sort: true
-  },
-  {
-    dataField: "Gender",
-    text: "Gender",
-    sort: true
-  },
-  {
-    dataField: "SessionEntry",
-    text: "Session Entry",
-    sort: true,
     
-  },
+    {
+      dataField: "matric",
+      text: "Reg. No",
+      sort: true
+    },
+    {
+      dataField: "fullName",
+      text: "Student Name",
+      sort: true
+    },
+    {
+      dataField: "class_name",
+      text: "Current Class",
+      sort: true
+    },
+    {
+      dataField: "gender",
+      text: "Gender",
+      sort: true
+    },
+    {
+      dataField: "session_name",
+      text: "Session Entry",
+      sort: true,
+      
+    },
   
   {
     dataField: "action",
     text: "Action",
     formatter: (cellContent, row) => {
       return (
-        <>
-        <button
-        className="" style={{color:'red', padding: '5px', backgroundColor:"white", border:'none'}} >
-        View Profile
-      </button>
-      </>
-      );
+          <>
+          <button style={{color:'blue', padding: '5px', marginRight:"5px", backgroundColor:"white", border:'none'}}
+           onClick={() => handleViewClick(row)}
+          >
+            View
+          </button>
+        
+        </>
+        );
+      },
     },
-  },
+    
   
   
   
 ];
 
 
-const Promotioninfo = () => {
   return (
     <div className="box-mainprt">
     <div class="box-prt">
@@ -100,8 +143,10 @@ const Promotioninfo = () => {
 
   <ToolkitProvider
   keyField="id"
-  data={ products }
+  data={ mergedData }
   columns={ columns }
+ cellEdit={cellEditFactory({ mode: 'click', blurToSave: true })}
+  noDataIndication="No data available"
   search
   exportCSV
 >
@@ -125,6 +170,41 @@ const Promotioninfo = () => {
     )
   }
 </ToolkitProvider>
+
+{selectedRow && (
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Student Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <strong>Registration Number: </strong>
+              {selectedRow.matric}
+            </div>
+            <div>
+              <strong>Full Name: </strong>
+              {selectedRow.fullName}
+            </div>
+            <div>
+              <strong>Gender: </strong>
+              {selectedRow.gender}
+            </div>
+            <div>
+              <strong>Session Entry: </strong>
+              {selectedRow.session_name}
+            </div>
+            <div>
+              <strong>Current Class: </strong>
+              {selectedRow.class_name}
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
 
   </div>

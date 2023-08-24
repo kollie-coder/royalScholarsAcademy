@@ -101,9 +101,16 @@ const Resulttable = () => {
       const sessionTerm = (cell, row) => {
         return `${row.session_name}/ ${row.term_name}`;
       };
+      const fullName = (cell, row) => {
+        return `${row.last_name} ${row.first_name}`;
+      };
       const dateUploaded = (cell, row) => {
         return new Date(row.created_at).toLocaleString();
       };
+
+      // Apply the formatter to the 'fullName' column
+      columns[3].formatter = fullName;
+
     
       // Apply the formatter to the 'fullName' column
       columns[4].formatter = sessionTerm;

@@ -87,37 +87,7 @@ const Resultinfo = () => {
 
     
 
-    const combineData1 = () => {
-      
-      // Combine the data from data1 and data2 as needed
-      return data3.map((item3) => {
-        const matchingItem4 = data4.find((item4) => item4.id === item3.id);
-       
-        if (matchingItem4) {
-          const fullName = `${matchingItem4.last_name} ${matchingItem4.first_name}`;
-          const sessionTerm = `${matchingItem4.session_name}/${matchingItem4.term_name}`;
-          const createdAtString = new Date(matchingItem4.start_date).toLocaleString();
-        
-          // Return the combined object with properties from both datasets
-          return {
-            id: item3.id,
-            matric: matchingItem4.matric, 
-            class: matchingItem4.class_name, 
-            fullName: fullName,
-            dateUploaded: createdAtString,
-            sessionTerm: sessionTerm,
-
-
-          };
-        }
-        
-  
-        return null; // Skip the items without a match in data2
-      }).filter((combinedItem) => combinedItem !== null);
     
-    
-    };
-
 
  
   const products = [
@@ -187,7 +157,7 @@ const Resultinfo = () => {
 
   const combinedData =combineData();
 
-  const combinedData1 =combineData1();
+ 
   
   return (
     <div className="box-mainRe">

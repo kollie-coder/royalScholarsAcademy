@@ -25,7 +25,8 @@ const Results = () => {
   const [id, setId] = useState('');
   const [selectedData, setSelectedData] = useState(null);
 
-  const [files, setFiles] = useState([]);
+  const [docs, setDocs] = useState([]);
+  const [successMessages, setSuccessMessages] = useState([]);
 
 
   
@@ -94,62 +95,36 @@ const Results = () => {
     }
   };
 
-  function sendData(event) {
-    event.preventDefault();
+  const sendData = async (e) => {
+    e.preventDefault();
+
     const url = 'http://francisop.pythonanywhere.com/school/result/';
     const formData = new FormData();
     formData.append('term', selectedTerm);
     formData.append('session', selectedSession);
     formData.append('school_class', selectedClass);
   
-    // Read files and create a Promise for each file
-    const filePromises = Array.from(files).map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (event) => resolve(event.target.result);
-        reader.readAsArrayBuffer(file);
-      });
+    docs.forEach((doc) => {
+      formData.append('doc', doc);
     });
-  
-    // Wait for all file reading promises to resolve
-    Promise.all(filePromises)
-      .then((fileContents) => {
-        const zip = new JSZip();
-        const zipFolder = zip.folder('pdfs'); // Create a folder inside the ZIP file
-  
-        // Add each file to the ZIP folder
-        files.forEach((file, index) => {
-          const fileContent = fileContents[index];
-          zipFolder.file(file.name, fileContent);
-        });
-  
-        // Generate the ZIP file asynchronously
-        return zip.generateAsync({ type: 'blob' });
-      })
-      .then((zipFile) => {
-        formData.append('doc', zipFile, 'files.zip');
-  
-        fetch(url, {
-          method: 'POST',
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Success:', data);
-            window.location.reload();
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error reading files:', error);
-      });
-  }
 
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(selectedFiles);
+
+    try {
+      const response = await axios.post(url, formData);
+
+      if (response.status === 200) {
+        const successMessage = `File ${successMessages.length + 1} successfully sent.`;
+        setSuccessMessages([...successMessages, successMessage]);
+      } else {
+        console.error('Error sending file:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sending files:', error);
+    }
+  };
+
+  const handleDocChange = (e) => {
+    setDocs([...docs, ...e.target.files]);
   };
 
 
@@ -258,7 +233,7 @@ const Results = () => {
 
         <Form.Group controlId="formFileLg" className="mb-3">
         
-        <Form.Control type="file" onChange={handleFileChange} multiple accept="application/pdf, application/vnd.ms-excel, application/zip"  />
+        <Form.Control type="file" onChange={handleDocChange} multiple accept="application/pdf, application/vnd.ms-excel, application/zip"  />
       </Form.Group>
                 <div className="form-group">
                     <button className="btn btn-primary" type="submit">Upload Result</button>
@@ -267,7 +242,9 @@ const Results = () => {
    </div>
 </div>
 </form>
-
+{successMessages.map((message, index) => (
+        <p key={index}>{message}</p>
+      ))}
  </div>
                
       </div>
